@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "metron_sites"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.8"
 Flask = "^2.2.2"
 Flask-Caching = "^2.0.1"
 Flask-Cors = "^3.0.10"
