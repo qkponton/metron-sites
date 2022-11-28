@@ -1,0 +1,36 @@
+name: Lint
+
+on:
+  push
+  # pull_request:
+  #  branches: [ develop, master, staging]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    environment:
+      name: development
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install tox
+        pip install poetry
+
+    - name: Run pre checks
+      run: tox
+
+#    - name: Run mypy
+#      run: tox -e type

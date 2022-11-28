@@ -1,0 +1,457 @@
+openapi: 3.0.3
+
+
+info:
+  title: Metron Site
+  description: REST API to manage machines on sites
+
+  contact:
+    email: quam.kponton@gmail.com
+  version: 0.0.1
+
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+
+tags:
+- name: machines
+  description: Everything about machines
+- name: "machine types"
+  description: Everything about machine types
+- name: sites
+  description: Everything about sites
+
+
+paths:
+  /machine-types:
+    get:
+      tags:
+      - "machine types"
+      summary: List all machine types
+      description: List all machine types
+      operationId: list_machine_types
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MachineTypesResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/MachineTypesResponse'
+        "500":
+          description: Internal Error
+      x-openapi-router-controller: metron_sites.apis.v1.machine_type
+
+  /machine:
+    get:
+      tags:
+      - machines
+      summary: List all machines
+      description: List all machines
+      operationId: list_machine
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MachinesResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/MachinesResponse'
+        "500":
+          description: Internal Error
+      x-openapi-router-controller: metron_sites.apis.v1.machine
+    post:
+      tags:
+      - machines
+      summary: Create a machine
+      description: Create a machine
+      operationId: create_machine
+      requestBody:
+        $ref: "#/components/requestBodies/CreateMachine"
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MachineResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/MachineResponse'
+        "400":
+          description: Bad request
+        "500":
+          description: Internal Error
+      x-openapi-router-controller: metron_sites.apis.v1.machine
+  '/machine/{machineId}':
+    parameters:
+      - in: path
+        name: machineId
+        description: Machine id
+        example: XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX
+        required: true
+        schema:
+          type: string
+          format: uuid
+    delete:
+      tags:
+      - machines
+      summary: Delete a machine
+      description: Delete a machine
+      operationId: delete_machine
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Error
+      x-openapi-router-controller: metron_sites.apis.v1.machine
+    get:
+      tags:
+      - machines
+      summary: Show a machine
+      description: Show a machine
+      operationId: get_machine
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MachineResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/MachineResponse'
+        "400":
+          description: Bad Request
+        "404":
+          description: Unknown site
+        "500":
+          description: Internal Error
+      x-openapi-router-controller: metron_sites.apis.v1.machine
+    put:
+      tags:
+      - machines
+      summary: Update a machine
+      description: Update a machine
+      operationId: update_machine
+      requestBody:
+        $ref: "#/components/requestBodies/UpdateMachine"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MachineResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/MachineResponse'
+        "400":
+          description: Bad Request
+        "404":
+          description: Unknown site
+        "500":
+          description: Internal Error
+      x-openapi-router-controller: metron_sites.apis.v1.machine
+
+  /site:
+    get:
+      tags:
+      - sites
+      summary: List all sites
+      description: List all sites
+      operationId: list_site
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SitesResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SitesResponse'
+        "500":
+          description: Internal Error
+      x-openapi-router-controller: metron_sites.apis.v1.site
+    post:
+      tags:
+      - sites
+      summary: Create a sites
+      description: Create a site
+      operationId: create_site
+      requestBody:
+        $ref: "#/components/requestBodies/CreateSite"
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SiteResponse'
+        "400":
+          description: Bad request
+        "500":
+          description: Internal Error
+      x-openapi-router-controller: metron_sites.apis.v1.site
+  '/site/{siteId}':
+    parameters:
+      - in: path
+        name: siteId
+        description: Site id
+        example: XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX
+        required: true
+        schema:
+          type: string
+          format: uuid
+    delete:
+      tags:
+      - sites
+      summary: Delete a site
+      description: Delete a site
+      operationId: delete_site
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Error
+      x-openapi-router-controller: metron_sites.apis.v1.site
+    get:
+      tags:
+      - sites
+      summary: Show a site
+      description: Show a site
+      operationId: get_site
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SiteResponse'
+        "400":
+          description: Bad Request
+        "404":
+          description: Unknown site
+        "500":
+          description: Internal Error
+      x-openapi-router-controller: metron_sites.apis.v1.site
+    put:
+      tags:
+      - sites
+      summary: Update a site
+      description: Update a site
+      operationId: update_site
+      requestBody:
+        $ref: "#/components/requestBodies/UpdateSite"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SiteResponse'
+        "400":
+          description: Bad Request
+        "404":
+          description: Unknown site
+        "500":
+          description: Internal Error
+      x-openapi-router-controller: metron_sites.apis.v1.site
+
+components:
+  requestBodies:
+    CreateMachine:
+      content:
+        application/json:
+          schema:
+            properties:
+              name:
+                example: printer
+                $ref: "#/components/schemas/ResourceName"
+              power:
+                type: integer
+                format: int64
+              site:
+                $ref: "#/components/schemas/ResourceId"
+              type:
+                $ref: "#/components/schemas/MachineType"
+            required:
+              - name
+              - power
+              - site
+              - type
+      description: Machine attributes
+      required: true
+
+    UpdateMachine:
+      content:
+        application/json:
+          schema:
+            properties:
+              name:
+                example: printer
+                $ref: "#/components/schemas/ResourceName"
+              power:
+                type: integer
+                format: int64
+      description: Machine attributes
+      required: true
+
+    CreateSite:
+      content:
+        application/json:
+          schema:
+            properties:
+              name:
+                example: paris-est
+                $ref: "#/components/schemas/ResourceName"
+              power:
+                type: integer
+                format: int64
+            required:
+              - name
+              - power
+      description: Machine attributes
+      required: true
+
+    UpdateSite:
+      content:
+        application/json:
+          schema:
+            properties:
+              name:
+                example: paris-est
+                $ref: "#/components/schemas/ResourceName"
+              power:
+                type: integer
+                format: int64
+      description: Machine attributes
+      required: true
+
+  schemas:
+    MachineResponse:
+      type: object
+      properties:
+        machine:
+          $ref: '#/components/schemas/Machine'
+    MachinesResponse:
+      type: object
+      properties:
+        operands:
+          type: array
+          items:
+            $ref: '#/components/schemas/Machine'
+    MachineTypesResponse:
+      type: object
+      properties:
+        operands:
+          type: array
+          items:
+            $ref: '#/components/schemas/MachineType'
+    SiteResponse:
+      type: object
+      properties:
+        site:
+          $ref: '#/components/schemas/Site'
+    SitesResponse:
+      type: object
+      properties:
+        operands:
+          type: array
+          items:
+            $ref: '#/components/schemas/Site'
+
+    Machine:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ResourceId"
+        name:
+          $ref: "#/components/schemas/ResourceName"
+          example: printer
+        power:
+          type: integer
+          format: int64
+        site:
+          $ref: "#/components/schemas/ResourceName"
+        type:
+          $ref: "#/components/schemas/MachineType"
+      required:
+        - name
+        - power
+        - site
+        - type
+      xml:
+        name: site
+    MachineType:
+      type: string
+      example: furnace
+      enum:
+        - chiller
+        - compressor
+        - furnace
+        - "rolling mill"
+    ResourceId:
+      type: string
+      format: uuid
+      example: XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX
+    ResourceName:
+      type: string
+      minLength: 3
+      maxLength: 50
+    Site:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ResourceId"
+        name:
+          $ref: "#/components/schemas/ResourceName"
+          example: paris-est
+        power:
+          type: integer
+          format: int64
+      required:
+        - name
+        - power
+      xml:
+        name: site
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+      example:
+        code: 0
+        type: type
+        message: message
+      xml:
+        name: '##default'
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
+      x-apikeyInfoFunc: metron_site.controllers.authorization_controller.check_api_key
