@@ -10,12 +10,8 @@ services:
       - "5432:5432"
     volumes:
       - ./data/db:/var/lib/postgresql/data
-    environment:
-      - DATABASE_NAME=postgres
-      - DATABASE_USER=postgres
-      - DATABASE_PASSWORD=postgres
-      - DATABASE_HOST=host.docker.internal
-      - DATABASE_PORT=5432
+    env_file:
+      - 'variables.env'
   web:
     build: .
     command: poetry run python -m metron_sites
@@ -27,6 +23,8 @@ services:
     environment:
       - DEBUG=True
       - Environment=test
+    env_file:
+      - 'variables.env'
 
     depends_on:
       - db
