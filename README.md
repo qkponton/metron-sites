@@ -17,6 +17,7 @@ docker-compose up
 ```
 
 ### Manual
+You need to configure a DB and its values with required environment variables
 ```
 pip3 install poetry
 poetry install
